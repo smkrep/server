@@ -48,7 +48,7 @@ def update_wishes():
     database = getDatabase()
     coll = database["SberWishes"]
     coll.update_one({'sberuserid': sberuserid}, {"$set": {'wishes': list_of_wishes}}, upsert=True)
-    return request.get_json
+    return request.get_json()
 
 @app.route("/test/")
 def test():
