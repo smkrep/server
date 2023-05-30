@@ -21,8 +21,8 @@ app = Flask(__name__)
 def default():
     return "blank page"
 
-@app.route("/api/getWishes/<str:sberuserid>")
-def get_wishes(sberuserid):
+@app.route("/api/getWishes/")
+def get_wishes(sberuserid: str):
     database = getDatabase()
     coll = database["SberWishes"]
     result = coll.find_one({'sberuserid': sberuserid}, {'_id': 0})
