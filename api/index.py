@@ -1,6 +1,7 @@
 from flask import Flask, request
 from pydantic import BaseModel
 from pymongo import MongoClient
+from flask_cors import CORS
 
 # class WishObj(BaseModel):
 #     sberuserid: int
@@ -16,6 +17,7 @@ from pymongo import MongoClient
 
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/")
 def default():
