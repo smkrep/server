@@ -18,8 +18,8 @@ class toUpdate(BaseModel):
 app = Flask(__name__)
 
 
-@app.route("/api/getWishes/")
-def get_wishes(sberuserid: str):
+@app.route("/api/getWishes/<str:sberuserid>")
+def get_wishes(sberuserid):
     database = getDatabase()
     coll = database["SberWishes"]
     result = coll.find_one({'sberuserid': sberuserid}, {'_id': 0})
