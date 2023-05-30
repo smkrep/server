@@ -2,17 +2,17 @@ from flask import Flask, request
 from pydantic import BaseModel
 from pymongo import MongoClient
 
-class WishObj(BaseModel):
-    sberuserid: int
-    importance: str
-    name: str
-    price: int
-    category: str
-    additional_info: str
+# class WishObj(BaseModel):
+#     sberuserid: int
+#     importance: str
+#     name: str
+#     price: int
+#     category: str
+#     additional_info: str
 
-class toUpdate(BaseModel):
-    sberuserid: str
-    list_of_wishes: list
+# class toUpdate(BaseModel):
+#     sberuserid: str
+#     list_of_wishes: list
 
 
 app = Flask(__name__)
@@ -33,11 +33,20 @@ def get_wishes():
 
 
 @app.route("/api/updateWishes/", methods=["POST"])
-def update_wishes(toupdate: toUpdate):
+def update_wishes():
+    request_data = request.get_json()
+    sberuserid = None
+    list_of_wishes = None
+
+    if request_data:
+        if 'sberuserid' in request_data:
+            sberuserid = request_data['sberuserid']
+        if 'list_of_wishes' in request_data:
+            list_of_wishes = request_data['list_of_wishes']
     database = getDatabase()
     coll = database["SberWishes"]
-    coll.update_one({'sberuserid': toupdate.sberuserid}, {"$set": {'wishes': toupdate.list_of_wishes}}, upsert=True)
-    return toupdate
+    coll.update_one({'sberuserid': sberuserid}, {"$set": {'wishes': list_of_wishes}}, upsert=True)
+    return request.get_json
 
 @app.route("/test/")
 def test():
