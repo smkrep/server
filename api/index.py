@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from pydantic import BaseModel
 from pymongo import MongoClient
 
@@ -22,7 +22,9 @@ def default():
     return "blank page"
 
 @app.route("/api/getWishes/")
-def get_wishes(sberuserid: str):
+def get_wishes():
+    args = request.args
+    sberuserid = args.get('sberuserid')
     database = getDatabase()
     coll = database["SberWishes"]
     result = coll.find_one({'sberuserid': sberuserid}, {'_id': 0})
