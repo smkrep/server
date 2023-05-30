@@ -27,11 +27,12 @@ def default():
 def get_wishes():
     args = request.args
     sberuserid = args.get('sberuserid')
+    print(sberuserid)
     database = getDatabase()
     coll = database["SberWishes"]
     result = coll.find_one({'sberuserid': sberuserid}, {'_id': 0})
     print(result)
-    return result
+    return sberuserid
 
 
 @app.route("/api/updateWishes/", methods=["POST"])
