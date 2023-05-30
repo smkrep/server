@@ -27,7 +27,6 @@ def default():
 def get_wishes():
     args = request.args
     sberuserid = args.get('sberuserid')
-    sberuserid = ''.join(sberuserid.split())
     database = getDatabase()
     coll = database["SberWishes"]
     result = coll.find_one({'sberuserid': sberuserid}, {'_id': 0})
